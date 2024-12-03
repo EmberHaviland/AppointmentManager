@@ -71,3 +71,4 @@
 /mnt/c/Users/xxexo/OneDrive/Documents/Digipen Documents/Cloud System/AppointmentSystem/AppointmentManager/AppointmentManager/obj/Debug/net8.0/AppointmentManager.pdb
 /mnt/c/Users/xxexo/OneDrive/Documents/Digipen Documents/Cloud System/AppointmentSystem/AppointmentManager/AppointmentManager/obj/Debug/net8.0/AppointmentManager.genruntimeconfig.cache
 /mnt/c/Users/xxexo/OneDrive/Documents/Digipen Documents/Cloud System/AppointmentSystem/AppointmentManager/AppointmentManager/obj/Debug/net8.0/ref/AppointmentManager.dll
+/mnt/c/Users/xxexo/OneDrive/Documents/Digipen Documents/Cloud System/AppointmentSystem/AppointmentManager/AppointmentManager/bin/Debug/net8.0/role-definition-rw.json

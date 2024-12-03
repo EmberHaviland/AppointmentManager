@@ -52,17 +52,17 @@ public class AppointmentHandler
     // }
 
     private string GetParameterFromList(string parameterName, HttpRequest request, MethodLogger log)
-{
-    if (request.HasFormContentType && request.Form.ContainsKey(parameterName))
     {
-        log.SetAttribute($"request.{parameterName}", request.Form[parameterName]!);
-        return request.Form[parameterName]!;
+        if (request.HasFormContentType && request.Form.ContainsKey(parameterName))
+        {
+            log.SetAttribute($"request.{parameterName}", request.Form[parameterName]!);
+            return request.Form[parameterName]!;
+        }
+        else
+        {
+            throw new UserErrorException($"No {parameterName} found");
+        }
     }
-    else
-    {
-        throw new UserErrorException($"No {parameterName} found");
-    }
-}
 
     public async Task AddAppointmentDelegate(HttpContext context)
     {
@@ -76,10 +76,12 @@ public class AppointmentHandler
                 m.userid = GetParameterFromList("userid", request, log);
                 m.aptname = GetParameterFromList("aptname", request, log);
                 m.description = GetParameterFromList("desc", request, log);
+                m.useremail = GetParameterFromList("useremail", request, log);
 
                 log.SetAttribute("request.userid", m.userid);
                 log.SetAttribute("request.aptname", m.aptname);
                 log.SetAttribute("request.desc", m.description);
+                log.SetAttribute("request.useremail", m.useremail);
                 // Parse human readable date time input (Format: MM/dd/yyyy h:mm tt) tt being AM/PM
                 string dtUnparsed = GetParameterFromList("datetime", request, log);
                         if (DateTime.TryParseExact(dtUnparsed, 
@@ -230,6 +232,30 @@ public class AppointmentHandler
             {
                 log.HandleException(e);
                 context.Response.StatusCode = StatusCodes.Status500InternalServerError;
+            }
+        }
+    }
+
+        // New method to retrieve all appointments
+    public async Task<List<AppointmentData>> GetAppointmentsDelegate(HttpContext context)
+    {
+        using(var log = _logger.StartMethod(nameof(GetAppointmentsDelegate), context))
+        {
+            try
+            {
+                HttpRequest request = context.Request;
+
+                string retQ = $"SELECT * FROM c"; 
+
+                var apts = await _cosmosDbWrapper.GetItemsAsync<AppointmentData>(retQ); // Use with text entry
+                
+                return apts.ToList<AppointmentData>();
+            }
+            catch(Exception e)
+            {
+                log.HandleException(e);
+                context.Response.StatusCode = StatusCodes.Status500InternalServerError;
+                return new List<AppointmentData>();
             }
         }
     }

@@ -48,6 +48,9 @@ class Program
         app.MapGet("/listAppointments", instance.ListAptsDelegate);
         app.MapGet("/cancelAppointment", instance.CancelAptDelegate);
         app.MapGet("/appointmentInfo", instance.DetailAptDelegate);
+        
+        // ONLY TO BE USED BY OTHER API
+        app.MapGet("/api/getAllAppointments", (Delegate)instance.GetAppointmentsDelegate);
                
         app.MapPost("/addAppointment", instance.AddAppointmentDelegate);
 

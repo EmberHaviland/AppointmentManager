@@ -10,12 +10,14 @@ public class AppointmentData
     public string id { get { return GenerateId(); } }
 
     public string userid { get; set; } = string.Empty;
+
+    public string useremail { get; set; } = string.Empty;
     public string aptname { get; set; } = string.Empty;
     public string description { get; set; } = string.Empty;
     public DateTime datetime { get; set; } = DateTime.MinValue;
 
     public override string ToString()
     {
-        return $"id: {id}, userid: {userid}, aptname: {aptname}, desc: {description}, datetime: {datetime}";
+        return $"id: {id}, userid: {userid}, useremail: {useremail}, aptname: {aptname}, desc: {description}, datetime: {datetime}";
     }
 }
